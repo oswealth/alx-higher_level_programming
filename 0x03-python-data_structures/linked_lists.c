@@ -32,7 +32,7 @@ size_t print_listint(const listint_t *h)
  * Return: address of the new element or NULL if it fails
  */
 
-listint_t *add_node_end(listint_t **head, const int n)
+listint_t *add_nodeint_end(listint_t **head, const int n)
 {
 	 listint_t *new;
 	 listint_t *current;
