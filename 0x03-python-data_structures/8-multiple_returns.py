@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 def multiple_returns(sentence):
-    if len(sentence) == 0:
-        first = None
+    length = len(sentence)
+    if length == 0:
+        total = (0, None)
+        return total
     else:
-        first = sentence[0]
-        length = len(sentence)
-        return (length, first)
+        tally = (length, sentence[0:1])
+        return tally
