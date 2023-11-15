@@ -66,6 +66,5 @@ void print_python_bytes(PyObject *p)
 
         for (i = 0; i < max; i++) 
                 if (string[i] >= 0) 
-                        printf(" %02x", string[i]); 
-        **//printf(" %02x", (unsigned char)string[i]);** 
+                        printf(" %02x", string[i]);
 }
