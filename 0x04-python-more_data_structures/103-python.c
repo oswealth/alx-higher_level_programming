@@ -15,7 +15,7 @@ void print_python_list(PyObject *p)
 	PyListObject *list;
 
 	list = (PyListObject *)p;
-	size = ((PyVarObject *)(p))->ob_size;
+	size = PyBytes_Size(p);
 
 	printf("[*] Python list info\n");
 	printf("[*] Size of the Python List = %ld\n", size);
@@ -47,8 +47,8 @@ void print_python_bytes(PyObject *p)
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
-	size = ((PyVarObject *)(p))->ob_size;
-	string = ((PyBytesObject *)p)->ob_sval;
+	size = PyBytes_Size(p);
+	string = PyBytes_AsStringAndSize(p, & string, NULL);
 
 	printf("  size: %ld\n", size);
 	printf("  trying string: %s\n", string);
@@ -63,5 +63,5 @@ void print_python_bytes(PyObject *p)
 	for (i = 0; i < max; i++)
 		if (string[i] >= 0)
 			printf(" %02x", string[i]);
-	printf(" %02x", 256 + string[i]);
+	printf(" %02x", (unsigned char)string[i]);
 }
