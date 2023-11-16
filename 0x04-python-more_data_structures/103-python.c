@@ -4,40 +4,42 @@
 void print_python_bytes(PyObject *p);
 
 /**
- * print_python_list - prints some basic info about Python lists
- * @p: a pointer to a Python object
+ * print_python_list - Prints some basic info about Python lists
+ * @p: A pointer to a Python object
  */
+
 void print_python_list(PyObject *p)
 {
-	Py_ssize_t size, i;
-	PyObject *item;
+	PyObject *obj;
+	long int size, i;
+	PyListObject *list;
+
+	list = (PyListObject *)p;
+	size = ((PyVarObject *)(p))->ob_size;
 
 	printf("[*] Python list info\n");
-	if (!PyList_Check(p))
-	{
-		printf("  [ERROR] Invalid List Object\n");
-		return;
-	}
-	size = PyList_Size(p);
 	printf("[*] Size of the Python List = %ld\n", size);
-	printf("[*] Allocated = %ld\n", ((PyListObject *)p)->allocated);
+	printf("[*] Allocated = %ld\n", list->allocated);
+
 	for (i = 0; i < size; i++)
 	{
-		item = PyList_GetItem(p, i);
-		printf("Element %ld: %s\n", i, item->ob_type->tp_name);
-		if (PyBytes_Check(item))
-			print_python_bytes(item);
+		obj = ((PyListObject *)p)->ob_item[i];
+		printf("Element %ld: %s\n", i, ((obj)->ob_type)->tp_name);
+		if (PyBytes_Check(obj))
+			print_python_bytes(obj);
 	}
 }
 
+
 /**
- * print_python_bytes - prints some basic info about Python bytes objects
- * @p: a pointer to a Python object
+ * print_python_bytes - Prints some basic info about Python bytes objects
+ * @p: A pointer to a Python object
  */
+
 void print_python_bytes(PyObject *p)
 {
-	Py_ssize_t size, i, max;
-	char *str;
+	char *string;
+	long int size, i, max;
 
 	printf("[.] bytes object info\n");
 	if (!PyBytes_Check(p))
@@ -45,17 +47,21 @@ void print_python_bytes(PyObject *p)
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
-	size = PyBytes_Size(p);
-	str = PyBytes_AsString(p);
+	size = ((PyVarObject *)(p))->ob_size;
+	string = ((PyBytesObject *)p)->ob_sval;
+
 	printf("  size: %ld\n", size);
-	printf("  trying string: %s\n", str);
-	max = size + 1 > 10 ? 10 : size + 1;
-	printf("  first %ld bytes: ", max);
+	printf("  trying string: %s\n", string);
+
+	if (size >= 10)
+		max = 10;
+	else
+		max = size + 1;
+
+	printf("  first %ld bytes:", max);
+
 	for (i = 0; i < max; i++)
-	{
-		printf("%02hhx", str[i]);
-		if (i < max - 1)
-			printf(" ");
-	}
-	printf("\n");
+		if (string[i] >= 0)
+			printf(" %02x", string[i]);
+	printf(" %02x", string[i]);
 }
