@@ -58,7 +58,7 @@ void print_python_bytes(PyObject *p)
 	else
 		max = size + 1;
 
-	printf("  first %ld bytes:", size);
+	printf("  first %ld bytes:", max);
 
 	for (i = 0; i < max; i++)
 		if (string[i] >= 0)
