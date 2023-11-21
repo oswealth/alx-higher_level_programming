@@ -5,8 +5,7 @@
 class Square:
     """ a square with a private attribute size."""
 
-
-    def __init__(self, size=0):
+	def __init__(self, size=0):
         """ initializes a square object with its size."""
         
         if not isinstance(size, int):
