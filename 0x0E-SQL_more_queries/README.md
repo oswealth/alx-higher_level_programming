@@ -1,4 +1,4 @@
-	**SQL - More queries**
+**SQL - More queries**
 
 
 **Learning Objectives**
