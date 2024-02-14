@@ -9,5 +9,8 @@
  * Both the initial list and the new list are printed
  */
 
-console.log(require('./100-data.js').list);
-console.log((require('./100-data.js').list).map((a, b) => a * b));
+const list = require('./100-data.js').list;
+
+const newList = list.map((val, idx) => val * idx);
+console.log(list);
+console.log(newList);
