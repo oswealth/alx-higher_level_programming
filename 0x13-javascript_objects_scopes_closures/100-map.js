@@ -6,7 +6,6 @@
  * New list is created with each value equal
  *    to the value of the initial list,
  *    multipled by the index in the list
- *
  * Both the initial list and the new list are printed
  */
 
