@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 /**
- * Concats 2 files.
+ * Concats 2 files
  */
 
 const fs = require('fs');
