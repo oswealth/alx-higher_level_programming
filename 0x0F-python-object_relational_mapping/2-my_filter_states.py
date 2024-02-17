@@ -16,16 +16,16 @@ if __name__ == "__main__":
                          db=db_name)
     cur = db.cursor()
 
-    """ Execute SQL query with user input """
-
-    query = "SELECT * FROM states WHERE name = '{}'
-    ORDER BY id ASC".format(state_name)
+    query = """
+    SELECT states.id, name FROM states WHERE name='{:s}'
+    COLLATE latin1_general_cs
+    ORDER BY states.id ASC;
+    """.format(state_name)
 
     cur.execute(query)
     rows = cur.fetchall()
     for row in rows:
         print(row)
 
-    """   Close cursor and database connection """
     cur.close()
     db.close()
