@@ -1,31 +1,29 @@
 #!/usr/bin/python3
-""" Filter states by user input """
-
-from sys import argv
+"""
+displays all values
+in the states table of hbtn_0e_0_usa where name matches the argument
+"""
+import sys
 import MySQLdb
 
 if __name__ == "__main__":
-    username = argv[1]
-    password = argv[2]
-    db_name = argv[3]
-    state_name = argv[4]
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=username,
-                         passwd=password,
-                         db=db_name)
-    cur = db.cursor()
+    mysql_username = sys.argv[1]
+    mysql_password = sys.argv[2]
+    database_name = sys.argv[3]
+    state_name = sys.argv[4]
 
-    query = """
-    SELECT states.id, name FROM states WHERE name='{:s}'
-    COLLATE latin1_general_cs
-    ORDER BY states.id ASC;
-    """.format(state_name)
-
-    cur.execute(query)
+    conn = MySQLdb.connect(host="localhost",
+                           port=3306,
+                           user=mysql_username,
+                           passwd=mysql_password,
+                           db=database_name)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM states\
+                 WHERE name='{}'\
+                 ORDER BY states.id ASC".format(state_name))
     rows = cur.fetchall()
     for row in rows:
-        print(row)
-
+        if row[1] == state_name:
+            print(row)
     cur.close()
-    db.close()
+    conn.close()
